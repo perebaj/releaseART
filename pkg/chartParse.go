@@ -1,10 +1,9 @@
 package pkg
 
 import (
-	"encoding/json"
-	"fmt"
 	"os"
 
+	"github.com/perebaj/releaseART/interfaces"
 	"gopkg.in/yaml.v3"
 )
 
@@ -14,22 +13,19 @@ func check(e error) {
 	}
 }
 
-func ParseYAML() {
-	data, err := os.ReadFile("ChartFiles/Chart.yaml")
+func ParseYAML() []string {
+	yfile, err := os.ReadFile("ChartFiles/Chart.yaml")
 	check(err)
-	fmt.Println(string(data))
-	var dataJson map[string]interface{}
-	yaml.Unmarshal(data, &dataJson)
-	map2, _ := json.Marshal(dataJson["dependencies"])
-	fmt.Println((map2[0]))
-	fmt.Println((string(map2)))
 
-	// dependencies := dataJson["dependencies"] //map[string]interface{}
-	// teste := json.Marshal(dependencies)
+	var chart interfaces.Chart
+	err2 := yaml.Unmarshal(yfile, &chart)
+	check(err2)
 
-	// fmt.Println(dataJson["dependencies"])
-	// for key, element := range dependencies["version"] {
-	// 	fmt.Println("key:", key, "element:", element)
-	// }
+	var dependencies_slice []string
+	//for each element of Dependencies save repository in a list
+	for _, dep := range chart.Dependencies {
+		dependencies_slice = append(dependencies_slice, dep.Repository)
+	}
+	return dependencies_slice
 
 }

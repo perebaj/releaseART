@@ -12,3 +12,4 @@ dependencies:
     condition: influxdb.enabled
     version: 4.12.0
     repository: https://helm.influxdata.com/
+    test: true

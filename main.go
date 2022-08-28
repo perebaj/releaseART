@@ -1,11 +1,14 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/perebaj/releaseART/pkg"
 )
 
 func main() {
-	pkg.ParseYAML()
-	// pkg.ArtifacthubFetch("argo", "argo-cd")
+	dependecies_slice := pkg.ParseYAML()
+	fmt.Println(dependecies_slice)
+	pkg.ArtifacthubFetch("argo", "argo-cd")
 
 }
